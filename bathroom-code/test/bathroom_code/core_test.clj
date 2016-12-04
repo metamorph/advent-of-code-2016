@@ -4,4 +4,4 @@
 
 (deftest cracking
   (testing "sample code"
-    (is (= "1984" (crack-the-code std-keypad [1 1] test-data)))))
+    (is (= "1985" (crack-the-code std-keypad [1 1] test-data)))))
