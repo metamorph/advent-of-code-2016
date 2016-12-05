@@ -9,8 +9,8 @@
                                   "a-b-c-d-e-f-g-h-987[abcde]"
                                   "not-a-real-room-404[oarel]"
                                   "totally-real-room-200[decoy]"]))))
-  (test "decryption"
+  (testing "decryption"
         (is (= "very encrypted name"
-               (decrypt-name "qzmt-zixmtkozy-ivhz")))))
+               (decrypt-name (enc->room "qzmt-zixmtkozy-ivhz-343[ggggg]"))))))
 
 

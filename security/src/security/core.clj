@@ -27,10 +27,22 @@
     (reduce + 0 (map :sector-id valid))))
 
 (defn shift-char [c]
-  (if (= \- c)
-    \space
+  (case c
+    \-     \space
+    \space \space
     (let [n (- (int c) 97)]
       (char (+ 97 (mod (inc n) 26))))))
 
+(defn shift-chars [cs]
+  (map shift-char cs))
 
-(defn decrypt-name [name] name)
+(defn decrypt-room [{:keys [name sector-id] :as data}]
+  (let [shifted (apply str (first (drop sector-id (iterate shift-chars name))))]
+    (assoc data :name shifted)))
+
+(defn decrypt-valid-rooms [input]
+  (let [rooms (map enc->room input)
+        valid (filter valid-room? rooms)]
+    (map decrypt-room valid)))
+
+
