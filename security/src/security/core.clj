@@ -18,7 +18,19 @@
 
 (defn valid-room? [{:keys [name checksum]}] (= checksum (name->checksum name)))
 
+(defn read-enc-rooms []
+  (clojure.string/split-lines (slurp (clojure.java.io/resource "input.txt"))))
+
 (defn sum-sector-ids [input]
   (let [rooms (map enc->room input)
         valid (filter valid-room? rooms)]
     (reduce + 0 (map :sector-id valid))))
+
+(defn shift-char [c]
+  (if (= \- c)
+    \space
+    (let [n (- (int c) 97)]
+      (char (+ 97 (mod (inc n) 26))))))
+
+
+(defn decrypt-name [name] name)
