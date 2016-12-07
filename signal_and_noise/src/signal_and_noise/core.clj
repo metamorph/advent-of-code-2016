@@ -3,6 +3,8 @@
 
 (defn most-common-c [freqs]
   (first (first (sort-by #(* -1 (last %)) freqs))))
+(defn least-common-c [freqs]
+  (first (first (sort-by #(last %) freqs))))
 
 (defn error-corrected [messages]
   (let [seed (repeat (count (first messages)) [])
@@ -10,7 +12,13 @@
         freqs (map frequencies cols)]
     (apply str (map most-common-c freqs))))
 
+(defn error-corrected-2 [messages]
+  (let [seed (repeat (count (first messages)) [])
+        cols (reduce (fn [lists chars] (mapv conj lists chars)) seed messages)
+        freqs (map frequencies cols)]
+    (apply str (map least-common-c freqs))))
+
 (defn -main
   [& args]
   (let [lines (clojure.string/split-lines (slurp (clojure.java.io/resource "input.txt")))]
-    (println (error-corrected lines))))
+    (println (error-corrected-2 lines))))
