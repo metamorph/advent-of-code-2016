@@ -2,6 +2,13 @@
   (:require [clojure.test :refer :all]
             [ipv7.core :refer :all]))
 
+
+(deftest abba-test
+  (testing "abba" 
+    (is (not (abba? "fhrj")))
+    (is (not (abba? "bbbb")))
+    (is (abba? "abba"))))
+
 (deftest a-test
   (testing "Sample data"
     (is (support-tls? "abba[mnop]qrst"))

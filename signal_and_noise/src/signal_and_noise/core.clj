@@ -18,6 +18,7 @@
         freqs (map frequencies cols)]
     (apply str (map least-common-c freqs))))
 
+
 (defn -main
   [& args]
   (let [lines (clojure.string/split-lines (slurp (clojure.java.io/resource "input.txt")))]
