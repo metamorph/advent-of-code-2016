@@ -5,9 +5,10 @@
 
 (deftest abba-test
   (testing "abba" 
-    (is (not (abba? "fhrj")))
-    (is (not (abba? "bbbb")))
-    (is (abba? "abba"))))
+    (is (not (abba? "fhrjdfh")))
+    (is (not (abba? "sflbbbbsf")))
+    (is (abba? "sabba"))
+    (is (abba? "dfkjhabbas"))))
 
 (deftest a-test
   (testing "Sample data"
