@@ -9,8 +9,20 @@
   (and (= a d)
        (= b c)
        (not= a b)))
-(defn abba? "Checks is a string contains a subsequence of 4 chars that is ABBA."
-  [s] (->> s (partition 4 1) (some -abba?)))
+
+(defn -aba? [[a b c]]
+  (and (= a c)
+       (not= a b)))
+(defn -make-bab? [[a b _ :as aba]]
+  (assert -aba? aba)
+  (fn [[x y z]]
+    (and (= x z b)
+         (= y a))))
+
+(defn any-match? [pred n s] (->> s (partition n 1) (filter pred) (first)))
+
+(def abba? (partial any-match? -abba? 4))
+(def aba? (partial any-match? -aba? 3))
 
 (defn partition-ipv
   "Takes an IPV7 and returns the hypernet parts and 'other' parts:
@@ -40,11 +52,17 @@
 (defn count-tls [lines]
   (count (filter support-tls? lines)))
 
+(defn support-ssl? [s]
+  ;; TODO: Fix 'zazbz[bzb]cdb'
+  (let [{:keys [hypernets others]} (partition-ipv s)]
+    (when-let [aba (first (filter aba? others))]
+      (some (-make-bab? aba) hypernets))))
+
 (defn count-ssl [lines]
   ;; TODO: Implement me
   10)
 
 (defn -main
   [& args]
-  (count-tls (str/split-lines (slurp (io/reader "input.txt")))
+  (count-tls (str/split-lines (slurp (io/resource "input.txt")))))
 
