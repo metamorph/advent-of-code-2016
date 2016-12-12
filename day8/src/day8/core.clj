@@ -8,8 +8,11 @@
        (repeat height)
        (vec)))
 
+(defn rotate [coll n] (take (count coll)
+                            (drop n
+                                  (cycle (seq coll)))))
 (defn rotate-column [display col n] display)
-(defn rotate-row [display row n] display)
+(defn rotate-row [display row n] (update display row rotate n))
 (defn rect [display width height] display)
 
 
